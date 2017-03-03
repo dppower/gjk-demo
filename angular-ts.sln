@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "app", "app\app.njsproj", "{F51D1586-30CE-4044-A12B-BFFD3E53404D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3B9CF81A-4450-45B5-99EA-4F628B103097} = {3B9CF81A-4450-45B5-99EA-4F628B103097}
+	EndProjectSection
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "server", "server\server.njsproj", "{3B9CF81A-4450-45B5-99EA-4F628B103097}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F51D1586-30CE-4044-A12B-BFFD3E53404D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F51D1586-30CE-4044-A12B-BFFD3E53404D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F51D1586-30CE-4044-A12B-BFFD3E53404D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F51D1586-30CE-4044-A12B-BFFD3E53404D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

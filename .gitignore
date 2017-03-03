@@ -1,0 +1,12 @@
+bin
+obj
+build/app
+build/server
+server/test-data
+node_modules
+npm-debug.*
+normalize.css
+test-styles.css
+.vs
+.db
+.opendb
