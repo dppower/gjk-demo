@@ -17,7 +17,7 @@ import { ActiveState } from "../objects/active-state";
     </div>
     <grid-canvas [z-index]="0"></grid-canvas>
     <active-canvas [z-index]="1" canvas-controller></active-canvas>
-    <footer>Source Code: <a href="https://github.com/dppower/">dppower/test</a></footer>
+    <footer>Source Code: <a href="https://github.com/dppower/gjk-demo">dppower/gjk-demo</a></footer>
     `,
     styles: [`
     :host {
