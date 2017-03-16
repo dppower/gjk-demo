@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html>
+<head>
+    <base href="/">
+    <title>GJK EPA Demo</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="build/sanitize-short.css">
+    <link rel="stylesheet" href="build/style.css">
+
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.4/zone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reflect-metadata/0.1.10/Reflect.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.10/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="/system-config-gh.js"></script>
+    <script>
+        System.import("app").catch(function(err){console.error(err);});
+    </script>
+</head>
+
+<!-- 3. Display the application -->
+<body>
+    <app-main>Loading...</app-main>
+</body>
+
+</html>
