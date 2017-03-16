@@ -35,12 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app-main.component.ts" />
+    <TypeScriptCompile Include="demo\arrow-icon.directive.ts" />
     <TypeScriptCompile Include="demo\demo.module.ts" />
     <TypeScriptCompile Include="objects\arrow-2d.ts" />
     <TypeScriptCompile Include="objects\grid-edges.ts" />
     <TypeScriptCompile Include="objects\collision-gjk.ts" />
     <TypeScriptCompile Include="objects\colors\color-keywords.ts" />
     <TypeScriptCompile Include="objects\colors\color-rgba.ts" />
+    <TypeScriptCompile Include="objects\mat2.ts" />
     <TypeScriptCompile Include="objects\rectangle.ts" />
     <TypeScriptCompile Include="objects\polygon.ts" />
     <TypeScriptCompile Include="objects\shape-2d.ts" />

@@ -17,8 +17,7 @@ export class CanvasController {
 
     @HostListener("mousemove", ["$event"])
     setMousePosition(event: MouseEvent) {
-        let client_position = new Vec2(event.clientX, event.clientY);
-        this.input_manager_.setMousePosition(client_position);
+        this.input_manager_.setMousePosition({ x: event.clientX, y: event.clientY });
     };
 
     @HostListener("wheel", ["$event"])

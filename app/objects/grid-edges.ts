@@ -1,18 +1,23 @@
-﻿import { Vec2 } from "./vec2";
+﻿import { Vec2, Vec2_C } from "./vec2";
 
 class Edge {
     constructor(
-        readonly start: Vec2,
-        readonly end: Vec2,
-        readonly direction: Vec2,
+        readonly start: Vec2_C,
+        readonly end: Vec2_C,
+        readonly direction: Vec2_C,
     ) { };
+
+    *[Symbol.iterator]() {
+        yield this.start;
+        yield this.end;
+    };
 };
 
 class GridEdges {
-    readonly left = new Edge(new Vec2(0, 0), new Vec2(0, 1), new Vec2(1, 0));
-    readonly up = new Edge(new Vec2(0, 1), new Vec2(1, 1), new Vec2(0, -1));
-    readonly right = new Edge(new Vec2(1, 1), new Vec2(1, 0), new Vec2(-1, 0));
-    readonly down = new Edge(new Vec2(1, 0), new Vec2(0, 0), new Vec2(1, 0));
+    readonly left = new Edge({ x: -1, y: -1 }, { x: -1, y: 1 }, Vec2.RIGHT);
+    readonly up = new Edge({ x: -1, y: 1 }, { x: 1, y: 1 }, Vec2.DOWN);
+    readonly right = new Edge({ x: 1, y: 1 }, { x: 1, y: -1 }, Vec2.LEFT);
+    readonly down = new Edge({ x: 1, y: -1 }, { x: -1, y: -1 }, Vec2.UP);
 
     *[Symbol.iterator]() {
         yield this.left;

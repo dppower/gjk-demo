@@ -1,99 +1,170 @@
-export type Vec2Object = { x: number, y: number };
+export type Vec2_T = { x: number, y: number } | Vec2;
+export type Vec2_C = { readonly [K in keyof Vec2_T]: Vec2_T[K] };
 
 export class Vec2 {
+
+    static readonly ZERO: Vec2_C = { x: 0, y: 0 };
+    static readonly LEFT: Vec2_C = { x: -1, y: 0 };
+    static readonly UP: Vec2_C = { x: 0, y: 1 };
+    static readonly RIGHT: Vec2_C = { x: 1, y: 0 };
+    static readonly DOWN: Vec2_C = { x: 0, y: -1 };
 
     get x() { return this.vector_[0]; };
     get y() { return this.vector_[1]; };
 
     get array() { return this.vector_; };
 
+    get object(): Vec2_T {
+        return { x: this.x, y: this.y };
+    };
+
     get length() {
         return Math.sqrt(this.squared_length);
     };
 
     get squared_length() {
-        return Math.pow(this.x, 2) + Math.pow(this.y, 2);
+        return this.x ** 2 + this.y ** 2;
     };
 
     set x(value: number) { this.vector_[0] = value; };
     set y(value: number) { this.vector_[1] = value; };
 
-    constructor(x = 0.0, y = 0.0) {
-        this.vector_ = new Float32Array([x, y]);
+    constructor(vec: Vec2_T = Vec2.ZERO) {
+        this.vector_ = new Float32Array([vec.x, vec.y]);
     };
 
     static fromArray(array: number[]) {
-        let vector = new Vec2();
-        vector.x = array[0] || 0.0;
-        vector.y = array[1] || 0.0;
-        return vector;
+        return new Vec2({
+            x: array[0] || 0,
+            y: array[1] || 0
+        });
     };
 
-    dot(a: Vec2 | Vec2Object) {
-        return this.x * a.x + this.y * a.y;
+    static length(a: Vec2_T) {
+        return Math.sqrt(a.x ** 2 + a.y ** 2);
+    };
+
+    static squaredLength(a: Vec2_T) {
+        return a.x ** 2 + a.y ** 2;
+    };
+
+    static dot(a: Vec2_T, b: Vec2_T) {
+        return a.x * b.x + a.y * b.y;
     };
 
     // Gives the signed area of a parellogram
-    static cross(a: Vec2, b: Vec2) {
+    static cross(a: Vec2_T, b: Vec2_T) {
         return (a.x * b.y) - (a.y * b.x);
     };
 
-    normalise() {
-        let length = this.length;
-        let n = new Vec2();
+    static normalise(a: Vec2_T, out?: Vec2): Vec2_T {
+        let length = Vec2.length(a);
         if (length > 0) {
             let factor = 1.0 / length;
-            n = this.scale(factor);
+            return Vec2.scale(a, factor, out);
+        } else {
+            if (out) {
+                out.reset();
+            }
+            return { x: 0, y: 0 };
         }
-        return n;   
     };
 
-    add(a: Vec2) {
-        let b = new Vec2();
-        b.x = this.x + a.x;
-        b.y = this.y + a.y;
-
-        return b;
+    static add(a: Vec2_T, b: Vec2_T, out?: Vec2): Vec2_T {
+        let sum = {
+            x: a.x + b.x,
+            y: a.y + b.y
+        };
+        if (out) {
+            out.copy(sum);
+        }
+        return sum;
     };
 
-    subtract(a: Vec2) {
-        let b = new Vec2();
-        b.x = this.x - a.x;
-        b.y = this.y - a.y;
-
-        return b;
+    static subtract(a: Vec2_T, b: Vec2_T, out?: Vec2): Vec2_T {
+        let diff = {
+            x: a.x - b.x,
+            y: a.y - b.y
+        };
+        if (out) {
+            out.copy(diff);
+        }
+        return diff;
     };
 
-    scale(scalar: number) {
-        let v = new Vec2();
-        v.x = this.x * scalar;
-        v.y = this.y * scalar;
-
-        return v;
+    static scale(a: Vec2_T, scalar: number, out?: Vec2): Vec2_T {
+        let scaled = {
+            x: a.x * scalar,
+            y: a.y * scalar
+        };
+        if (out) {
+            out.copy(scaled);
+        }
+        return scaled;
     };
 
-    toString() {
-        return `x: ${this.x}, y: ${this.y}`;
+
+    static inverse(a: Vec2_T, out?: Vec2): Vec2_T {
+        let inverse = {
+            x: -a.x + 0,
+            y: -a.y + 0
+        };
+        if (out) {
+            out.copy(inverse);
+        }
+        return inverse;
     };
 
-    isZero() {
-        return this.x === 0 && this.y === 0;
+    inverse() {
+        return Vec2.inverse(this, this);
     };
 
-    isEqual(b: Vec2) {
-        return this.x === b.x && this.y === b.y;
+    /**
+     * returns (-y, x)
+     */
+    static perLeft(a: Vec2_T, out?: Vec2): Vec2_T {
+        let left = {
+            x: -a.y + 0,
+            y: a.x
+        };
+        if (out) {
+            out.copy(left);
+        }
+        return left;
     };
 
-    zero() {
+    /**
+     * returns (y, -x)
+     */
+    static perRight(a: Vec2_T, out?: Vec2): Vec2_T {
+        let right = {
+            x: a.y,
+            y: -a.x + 0
+        };
+        if (out) {
+            out.copy(right);
+        }
+        return right;
+    };
+
+    static stringify(a: Vec2_T) {
+        return `x: ${a.x}, y: ${a.y}`;
+    };
+
+    static isZero(a: Vec2_T) {
+        return a.x === 0 && a.y === 0;
+    };
+
+    static areEqual(a: Vec2_T, b: Vec2_T) {
+        return a.x === b.x && a.y === b.y;
+    };
+
+    reset() {
         this.x = 0;
         this.y = 0;
     };
 
-    inverse() {
-        return new Vec2(-1 * this.x + 0, -1 * this.y + 0);
-    };
-
-    copy(a: Vec2) {
+    copy(a: Vec2_T) {
         this.vector_[0] = a.x;
         this.vector_[1] = a.y;
     };

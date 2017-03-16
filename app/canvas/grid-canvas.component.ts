@@ -48,7 +48,7 @@ export class GridCanvas extends Canvas2D {
     drawBuffer() {
         const row_count = 20;
 
-        this.context.strokeStyle = "rgba(125, 125, 125, 0.5)";
+        this.context.strokeStyle = "rgba(125, 125, 125, 0.4)";
         this.context.strokeRect(0, 0, this.buffer_width, this.buffer_height);
 
         let spacing = this.buffer_width / row_count;
@@ -66,7 +66,7 @@ export class GridCanvas extends Canvas2D {
         }
         this.context.stroke();
 
-        this.context.strokeStyle = "black";
+        this.context.strokeStyle = "rgba(0, 0, 0, 0.6)";
         // Draw tick marks
         this.context.beginPath();
         for (let i = 1; i < row_count; i++) {

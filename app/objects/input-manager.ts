@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { Vec2 } from "./vec2";
+import { Vec2, Vec2_T } from "./vec2";
 
 export interface InputState {
     up: boolean,
@@ -48,7 +48,7 @@ export interface PointerState {
 export class InputManager {
 
     get pointer_delta() {
-        return new Vec2(this.pointer_delta_.x, -this.pointer_delta_.y);
+        return { x: this.pointer_delta_.x, y: -this.pointer_delta_.y };
     };
 
     get pointer_position() { return this.current_mouse_button_state_.clamped_position; };
@@ -61,6 +61,13 @@ export class InputManager {
 
     private previous_mouse_button_state_: PointerState;
     private current_mouse_button_state_: PointerState;
+
+    private pointer_delta_ = new Vec2();
+
+    private top = 0;
+    private left = 0;
+    private width = 0;
+    private height = 0;
 
     constructor() {
         this.previous_key_state_ = Object.assign({}, InitialInputState);
@@ -79,35 +86,36 @@ export class InputManager {
         this.current_key_bindings_.set("Space", "jump");  
     };
 
-    private pointer_delta_ = new Vec2();
-
-    private top = 0;
-    private left = 0;
-    private width = 0;
-    private height = 0;
-
-
     getDirectionFromInput() {
         let direction = new Vec2();
-        if (this.isButtonDown("left") /*&& this.isPointInRect(this.pointer_position)*/) {
-            direction = this.pointer_delta;
+        if (this.isButtonDown("right") /*&& this.isPointInRect(this.pointer_position)*/) {
+            direction.copy(this.pointer_delta);
         } else {
             if (this.isKeyDown("right")) {
-                direction = direction.add(new Vec2(1, 0));
+                Vec2.add(direction, Vec2.RIGHT, direction);
             }
             if (this.isKeyDown("left")) {
-                direction = direction.add(new Vec2(-1, 0));
+                Vec2.add(direction, Vec2.LEFT, direction);
             }
             if (this.isKeyDown("up")) {
-                direction = direction.add(new Vec2(0, 1));
+                Vec2.add(direction, Vec2.UP, direction);
             }
             if (this.isKeyDown("down")) {
-                direction = direction.add(new Vec2(0, -1));
+                Vec2.add(direction, Vec2.DOWN, direction);
             }
         }
+        return Vec2.normalise(direction);
+    };
 
-        direction = direction.normalise();
-        return direction;
+    getRotationFromInput(): -1 | 0 | 1 {
+        let rotation: -1 | 0 | 1 = 0;
+        if (this.isKeyDown("rotate_cw")) {
+            rotation = <1>(rotation + 1);
+        }
+        if (this.isKeyDown("rotate_ccw")) {
+            rotation = <-1>(rotation - 1);
+        }
+        return rotation;
     };
 
     setBoundaries(x: number, y: number, w: number, h: number) {
@@ -117,10 +125,7 @@ export class InputManager {
         this.width = w;
     };
 
-    mouse_event_count = 0;
-
-    setMousePosition(position: Vec2) {
-        this.mouse_event_count++;
+    setMousePosition(position: Vec2_T) {
         
         let x: number;
         if (position.x < -0.5 * this.left) {
@@ -140,11 +145,11 @@ export class InputManager {
             y = (position.y + 0.5 * this.top) / this.height;
         }
 
-        let current_delta = position.subtract(this.previous_mouse_button_state_.client_position).normalise();
-        this.pointer_delta_ = this.pointer_delta.add(current_delta).scale(0.5);
+        let current_delta = Vec2.normalise(Vec2.subtract(position, this.previous_mouse_button_state_.client_position));
+        Vec2.scale(Vec2.add(this.pointer_delta, current_delta), 0.5, this.pointer_delta_);
 
-        this.current_mouse_button_state_.client_position = position;
-        this.current_mouse_button_state_.clamped_position = new Vec2(2 * x - 1, 1 - 2 * y);
+        this.current_mouse_button_state_.client_position.copy(position);
+        this.current_mouse_button_state_.clamped_position.copy({ x: 2 * x - 1, y: 1 - 2 * y });
     };
 
     setWheelDirection(value: 1 | -1) {
@@ -201,9 +206,6 @@ export class InputManager {
     };
 
     update() {
-        //console.log(`event count: ${ this.mouse_event_count }.`);
-        //this.mouse_event_count = 0;
-        // Reset this
         for (let input in this.current_key_state_) {
             this.previous_key_state_[input] = this.current_key_state_[input];
         };
@@ -212,7 +214,7 @@ export class InputManager {
             this.previous_mouse_button_state_[input] = this.current_mouse_button_state_[input];
         };
 
-        this.pointer_delta_ = new Vec2();
+        //this.pointer_delta_.reset();
         this.current_mouse_button_state_.wheel = 0.0;
     };
 }

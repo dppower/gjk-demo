@@ -18,6 +18,11 @@ export class ColorRGBA {
         return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
     };
 
+    getTransparentColor(opacity: number) {
+        let alpha = (opacity < 0) ? 0 : (opacity > 1) ? 1 : opacity;
+        return `rgba(${this.r}, ${this.g}, ${this.b}, ${alpha})`;
+    };
+
     get hex() {
         let byteToHex = (byte: number) => {
             if (byte <= 15) {

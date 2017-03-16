@@ -1,10 +1,12 @@
-﻿import { Vec2 } from "./vec2";
+﻿import { Vec2, Vec2_T } from "./vec2";
+import { Mat2 } from "./mat2";
 import { ColorRGBA } from "./colors/color-rgba";
 import { Shape2d } from "./shape-2d";
 import { InputManager } from "./input-manager";
 import { ActiveState } from "./active-state";
 import { Polygon } from "./polygon";
 import { CollisionGJK } from "./collision-gjk";
+import { GRID_EDGES } from "./grid-edges";
 
 export class Rectangle extends Polygon {
 
@@ -20,11 +22,10 @@ export class Rectangle extends Polygon {
         this.height_ = this.scale * unit;
     };
 
-    get position() { return this.position_; };
-    
-    private velocity = 0.0002;
-    private position_: Vec2;
-    private previous_position_ = new Vec2();
+    private collision_sphere: number;
+
+    private velocity = 0.0005;
+    private turn_speed = 0.0005;
 
     constructor(
         initial_position: Vec2,
@@ -35,91 +36,108 @@ export class Rectangle extends Polygon {
     ) {
         super(4, color, index);
         this.position_ = initial_position;
-        this.initialiseRectCoords();
+        this.initialiseRectCoords();       
     };
 
     initialiseRectCoords() {
         let half_w = this.width_ / 2;
         let half_h = this.height_ / 2;
 
-        this.vertices = [
-            new Vec2(this.position_.x - half_w, this.position_.y + half_h),
-            new Vec2(this.position_.x + half_w, this.position_.y + half_h),
-            new Vec2(this.position_.x + half_w, this.position_.y - half_h),
-            new Vec2(this.position_.x - half_w, this.position_.y - half_h)
+        this.local_vertices = [
+            new Vec2({ x: -half_w, y: +half_h }),
+            new Vec2({ x: +half_w, y: +half_h }),
+            new Vec2({ x: +half_w, y: -half_h }),
+            new Vec2({ x: -half_w, y: -half_h })
         ];
+
+        this.updateWorldVertices();
+        this.collision_sphere = Vec2.length(this.local_vertices[0]) + 0.1;
     };
 
-    updateRectCoords() {
-        let half_w = this.width_ / 2;
-        let half_h = this.height_ / 2;
-
-        this.vertices[0].x = this.position_.x - half_w;
-        this.vertices[0].y = this.position_.y + half_h;
-        this.vertices[1].x = this.position_.x + half_w;
-        this.vertices[1].y = this.position_.y + half_h;
-        this.vertices[2].x = this.position_.x + half_w;
-        this.vertices[2].y = this.position_.y - half_h;
-        this.vertices[3].x = this.position_.x - half_w;
-        this.vertices[3].y = this.position_.y - half_h;
-    };
-
-    updatePolygon(dt: number, inputs: InputManager) {
+    updatePolygon(dt: number, inputs: InputManager, handle_collisions = true) {
 
         this.previous_position_.copy(this.position_);
+        let rotation = inputs.getRotationFromInput();
 
+        if (rotation) {
+            try {
+                this.rotate(dt, rotation);
+            } catch (e) {
+                console.error(e.message);
+            }
+        }
         let direction = inputs.getDirectionFromInput();
-        this.updatePosition(dt, direction);
+        this.translate(dt, direction);
+        this.checkEdgeCollisions();
+        if (handle_collisions) {
+            this.checkPolygonCollisions(this.active_state.inactive);
+        }
     };
 
     checkEdgeCollisions() {
-        
-        let edges: Vec2[];
+        let displacements: Vec2_T[] = [];
 
-        let displacements: Vec2[] = [];
+        for (let edge of GRID_EDGES) {
+            // Check if object is close to edge
+            if (Vec2.dot(this.position_, edge.direction) < this.collision_sphere) {
+                let result = CollisionGJK.isCollision(this, edge);
 
-        for (let edge of edges) {
-            
+                if (result.is_collision) {
+                    let displace = CollisionGJK.getDisplacement(this, edge, result.simplex);
+                    if (!Vec2.isZero(displace)) {
+                        displacements.push(displace);
+                    }
+                }                
+            }
         }
+         
         if (displacements.length !== 0) {
-            return displacements.reduce((prev: Vec2, curr: Vec2) => {
-                if (curr.length < prev.length) return curr;
-                return prev;
+            let displace = displacements.reduce((prev: Vec2_T, curr: Vec2_T) => {
+                return Vec2.add(prev, curr);
             });
-        } else {
-            return new Vec2();
+
+            Vec2.add(this.position_, displace, this.position_);
+            this.updateWorldVertices();
         }
     };
 
     checkPolygonCollisions(polygon: Polygon) {
-        let displace = CollisionGJK.isCollision(this, polygon);
-        return displace ? displace : new Vec2();
+        let result = CollisionGJK.isCollision(this, polygon);
+        if (result.is_collision) {
+            let displace = CollisionGJK.getDisplacement(this, polygon, result.simplex);
+            if (!Vec2.isZero(displace)) {
+                Vec2.add(this.position_, displace, this.position_);
+                this.updateWorldVertices();
+            }
+        }
     };
     
-    isPointInRect(P: Vec2) {
-        let AB = this.vertices[1].subtract(this.vertices[0]);
-        let AP = P.subtract(this.vertices[0]);
+    isPointInRect(point: Vec2_T) {
+        let AB = Vec2.subtract(this.world_vertices[1], this.world_vertices[0]);
+        let AP = Vec2.subtract(point, this.world_vertices[0]);
 
-        let BC = this.vertices[2].subtract(this.vertices[1]);
-        let BP = P.subtract(this.vertices[1]);
+        let BC = Vec2.subtract(this.world_vertices[2], this.world_vertices[1]);
+        let BP = Vec2.subtract(point, this.world_vertices[1]);
 
-        let AB_AP = AB.dot(AP);
-        let BC_BP = BC.dot(BP);
+        let AB_AP = Vec2.dot(AB, AP);
+        let BC_BP = Vec2.dot(BC, BP);
 
-        return (0 <= AB_AP) && (AB_AP <= AB.dot(AB)) && (0 <= BC_BP) && (BC_BP <= BC.dot(BC));
+        return (0 <= AB_AP) && (AB_AP <= Vec2.dot(AB, AB)) && (0 <= BC_BP) && (BC_BP <= Vec2.dot(BC, BC));
     };
 
-    updatePosition(dt: number, direction: Vec2) {       
-        this.position_.copy(this.position_.add(direction.scale(this.velocity * dt)));
-        this.updateRectCoords();
-        let displace = this.checkPolygonCollisions(this.active_state.inactive);
-        this.position_.copy(this.position_.add(displace));
-        this.updateRectCoords();
-                
+    translate(dt: number, direction: Vec2_T) {       
+        Vec2.add(this.position_, Vec2.scale(direction, this.velocity * dt), this.position_);
+        this.updateWorldVertices();              
+    };
+
+    rotate(dt: number, angle: -1 | 1) {
+        let theta = angle * this.turn_speed * dt;
+        let rotation = Mat2.fromAngle(theta);
+
+        Mat2.multiply(rotation, this.orientation_, this.orientation_);
     };
 
     drawShape(buffer_width: number, buffer_height: number) {
-        let [a, b, c, d] = Shape2d.getCoordinatesInPixels(this, buffer_width, buffer_height);
-        return Shape2d.drawQuad(a, b, c, d);
+        return Shape2d.drawPolygon(this, buffer_width, buffer_height);
     };
 };
