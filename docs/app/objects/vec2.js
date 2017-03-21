@@ -108,10 +108,9 @@ class Vec2 {
         return inverse;
     }
     ;
-    inverse() {
-        return Vec2.inverse(this, this);
-    }
-    ;
+    //inverse() {
+    //    return Vec2.inverse(this, this);
+    //};
     /**
      * returns (-y, x)
      */
