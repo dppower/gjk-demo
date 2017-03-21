@@ -1,6 +1,6 @@
 ﻿// Class
 interface Path2D {
-    // addPath(path: Path2D, transform?: SVGMatrix);
+    // addPath(path: Path2D, transform?: SVGMatrix); Firefox only!
     closePath(): void;
     moveTo(x: number, y: number): void;
     lineTo(x: number, y: number): void;
@@ -13,16 +13,15 @@ interface Path2D {
 }
 
 // Constructor
-interface Path2DConstructor {
+declare var Path2D: {
     new (): Path2D;
     new (d: string): Path2D;
     new (path: Path2D, fillRule?: string): Path2D;
     prototype: Path2D;
 }
-declare var Path2D: Path2DConstructor;
 
 // Extend Window 
-interface Window { Path2D: Path2DConstructor; }
+interface Window { Path2D: Path2D; }
 
 // Extend CanvasRenderingContext2D
 interface CanvasRenderingContext2D {

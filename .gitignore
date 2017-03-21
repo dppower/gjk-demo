@@ -1,4 +1,5 @@
 bin
+aot
 obj
 build/app
 build/server

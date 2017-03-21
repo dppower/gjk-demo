@@ -11,8 +11,8 @@
     "suppressImplicitAnyIndexErrors": true
   },
 
-  "include":  [
-      "../app/*"
+  "files": [
+      "../app/app.module.ts"
   ],
 
   "angularCompilerOptions": {
