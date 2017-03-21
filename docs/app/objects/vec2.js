@@ -13,7 +13,7 @@ class Vec2 {
         return { x: this.x, y: this.y };
     }
     ;
-    get length() {
+    get magnitude() {
         return Math.sqrt(this.squared_length);
     }
     ;

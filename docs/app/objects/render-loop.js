@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require("@angular/core");
-const Rx_1 = require("rxjs/Rx");
+const Subject_1 = require("rxjs/Subject");
 const input_manager_1 = require("./input-manager");
 let RenderLoop = class RenderLoop {
     constructor(input_manager) {
@@ -20,8 +20,8 @@ let RenderLoop = class RenderLoop {
         // fps
         this.frames_per_second = 60;
         this.frames_this_second = 0;
-        this.render$ = new Rx_1.Subject();
-        this.update$ = new Rx_1.Subject();
+        this.render$ = new Subject_1.Subject();
+        this.update$ = new Subject_1.Subject();
         this.renderUpdateList = new Map();
     }
     get fps() {
