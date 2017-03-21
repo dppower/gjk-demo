@@ -1,11 +1,12 @@
 console.log("configuring system.js...");
 (function (global) {
     var paths = {
-        "npm:": "https://npmcdn.com/"
+        "npm:": "https://npmcdn.com/",
+        "unpkg": "https://unpkg.com/"
     }
     var map = {
         "app": "/gjk-demo/app/",
-        "rxjs": "npm:rxjs"
+        "rxjs": "unpkg:rxjs"
     };
 
     var packages = {

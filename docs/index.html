@@ -11,16 +11,16 @@
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/shim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.4/zone.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reflect-metadata/0.1.10/Reflect.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.10/system.js"></script>
+    <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
+    <script src="https://unpkg.com/zone.js/dist/zone.js"></script>
+    <script src="https://unpkg.com/reflect-metadata/Reflect.js"></script>
+    <script src="https://unpkg.com/systemjs/dist/system.src.js"></script>
 
     <!-- 2. Configure SystemJS -->    
     <script src="gjk-demo/system-config.js"></script>
     <script>
         System.import("app").catch(function(err){console.error(err);});
-    </script>>
+    </script>
 </head>
 
 <!-- 3. Display the application -->
