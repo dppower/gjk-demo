@@ -33,9 +33,9 @@ export abstract class Polygon implements Iterable<Vec2_T> {
         return CollisionGJK.isCollision([point], this).is_collision;
     };
 
-    abstract updatePolygon(dt: number, inputs: InputManager, handle_collisions?: boolean);
+    abstract updatePolygon(dt: number, inputs: InputManager, handle_collisions?: boolean): void;
 
-    abstract drawShape(buffer_width: number, buffer_height: number);
+    abstract drawShape(buffer_width: number, buffer_height: number): Path2D;
 
     * getWorldVertices(): IterableIterator<Vec2_T> {
         yield* this.world_vertices;

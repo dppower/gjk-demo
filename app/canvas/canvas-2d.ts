@@ -25,5 +25,5 @@ export abstract class Canvas2D {
         });
     };
 
-    abstract afterCanvasInit();
+    abstract afterCanvasInit(): void;
 }

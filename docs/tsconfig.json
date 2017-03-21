@@ -2,13 +2,15 @@
     "compilerOptions": {
         "target": "es2015",
         "lib": ["es2015", "dom"],
-        "module": "system",
+        "module": "commonjs",
         "moduleResolution": "node",
-        "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
-        "outDir": "../build/app"
-    }
+        "outDir":  "app"
+    },
+    "include":  [
+        "../app/*"
+    ]
 }

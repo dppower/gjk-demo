@@ -2,8 +2,8 @@
 
 export abstract class Context2D implements OnChanges {
 
-    @HostBinding("width") canvas_width;
-    @HostBinding("height") canvas_height;
+    @HostBinding("width") canvas_width: number;
+    @HostBinding("height") canvas_height: number;
 
     @Input("client-width") client_width: number;
     @Input("client-height") client_height: number;

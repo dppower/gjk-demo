@@ -1,6 +1,6 @@
 ﻿// Class
 interface Path2D {
-    addPath(path: Path2D, transform?: SVGMatrix);
+    // addPath(path: Path2D, transform?: SVGMatrix);
     closePath(): void;
     moveTo(x: number, y: number): void;
     lineTo(x: number, y: number): void;

@@ -1,5 +1,6 @@
 bin
 obj
+build/app
 build/server
 server/test-data
 node_modules

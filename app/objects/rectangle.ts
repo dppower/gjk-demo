@@ -137,7 +137,7 @@ export class Rectangle extends Polygon {
         Mat2.multiply(rotation, this.orientation_, this.orientation_);
     };
 
-    drawShape(buffer_width: number, buffer_height: number) {
+    drawShape(buffer_width: number, buffer_height: number): Path2D {
         return Shape2d.drawPolygon(this, buffer_width, buffer_height);
     };
 };
