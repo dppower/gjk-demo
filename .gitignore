@@ -3,6 +3,7 @@ aot
 obj
 build/app
 build/server
+build/rollup
 server/test-data
 node_modules
 npm-debug.*

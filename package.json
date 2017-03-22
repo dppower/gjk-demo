@@ -12,6 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@angular/cli": "^1.0.0-rc.4",
     "@angular/common": "^2.3.1",
     "@angular/compiler": "^2.3.1",
     "@angular/compiler-cli": "^2.4.10",
@@ -37,6 +38,9 @@
     "concurrently": "^3.1.0",
     "lite-server": "^2.2.2",
     "lodash": "^4.16.4",
+    "rollup": "^0.41.6",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^2.0.0",
     "uglify-js": "github:mishoo/UglifyJS2#harmony"
   },
   "repository": {}

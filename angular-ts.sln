@@ -10,6 +10,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "app", "app\app.njsproj", "{
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "server", "server\server.njsproj", "{3B9CF81A-4450-45B5-99EA-4F628B103097}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "rollup", "rollup\rollup.njsproj", "{E0EBE077-8A7C-4121-B6B8-0F8138FEA388}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B9CF81A-4450-45B5-99EA-4F628B103097}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0EBE077-8A7C-4121-B6B8-0F8138FEA388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0EBE077-8A7C-4121-B6B8-0F8138FEA388}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0EBE077-8A7C-4121-B6B8-0F8138FEA388}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0EBE077-8A7C-4121-B6B8-0F8138FEA388}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
