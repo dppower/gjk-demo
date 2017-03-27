@@ -23281,8 +23281,10 @@ class CollisionGJK {
     ;
     static isCollision(a, b) {
         let dir = new Vec2(Vec2.UP);
+        console.log(dir);
         let simplex_vertex = this.getSupportPoint(a, b, dir);
         let simplex = [simplex_vertex];
+        console.log(`dir: ${Vec2.stringify(dir)}.`);
         Vec2.inverse(simplex_vertex, dir);
         let is_collision = false;
         let iter = 0;
@@ -24150,6 +24152,17 @@ var __metadata$7 = (undefined && undefined.__metadata) || function (k, v) {
 let CanvasController = class CanvasController {
     constructor(input_manager_) {
         this.input_manager_ = input_manager_;
+        this.keycodes = {
+            87: "KeyW",
+            83: "KeyS",
+            65: "KeyA",
+            68: "KeyD",
+            69: "KeyE",
+            81: "KeyQ",
+            84: "KeyT",
+            88: "KeyX",
+            32: "Space"
+        };
     }
     ;
     disableContext(event) {
@@ -24186,7 +24199,12 @@ let CanvasController = class CanvasController {
     }
     ;
     setKeyDown(event) {
-        this.input_manager_.setKeyDown(event.code);
+        if (event.code) {
+            this.input_manager_.setKeyDown(event.code);
+        }
+        else if (event.keyCode) {
+            this.input_manager_.setKeyDown(this.keycodes[event.keyCode]);
+        }
         return false;
     }
     ;

@@ -57,9 +57,10 @@ export class CollisionGJK {
 
     static isCollision(a: Iterable<Vec2_T>, b: Iterable<Vec2_T>) {
         let dir = new Vec2(Vec2.UP);
+        console.log(dir);
         let simplex_vertex = this.getSupportPoint(a, b, dir);
         let simplex = [simplex_vertex];
-
+        console.log(`dir: ${Vec2.stringify(dir)}.`);
         Vec2.inverse(simplex_vertex, dir);
 
         let is_collision = false;

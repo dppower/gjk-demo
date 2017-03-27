@@ -49,9 +49,25 @@ export class CanvasController {
         }
     };
 
+    readonly keycodes: { [code: number]: string } = {
+        87: "KeyW", 
+        83: "KeyS", 
+        65: "KeyA", 
+        68: "KeyD", 
+        69: "KeyE", 
+        81: "KeyQ", 
+        84: "KeyT", 
+        88: "KeyX", 
+        32: "Space"
+    };
+
     @HostListener("document:keydown", ["$event"])
     setKeyDown(event: KeyboardEvent) {
-        this.input_manager_.setKeyDown(event.code);
+        if (event.code) {
+            this.input_manager_.setKeyDown(event.code);
+        } else if (event.keyCode) {
+            this.input_manager_.setKeyDown(this.keycodes[event.keyCode]);
+        }
 
         return false;
     };
