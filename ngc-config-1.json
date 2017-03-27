@@ -10,16 +10,16 @@
     "experimentalDecorators": true,
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "./build-es"
+    "outDir": "build-aot"
   },
 
   "files": [
-      "./app/main-aot.ts",
+      "./app/main.ts",
       "./app/path-2d.d.ts"
   ],
 
   "exclude": [
-      "./app/main.ts"
+      "./app/main-aot.ts"
   ],
 
   "angularCompilerOptions": {

@@ -4,7 +4,7 @@ import commonjs = require( 'rollup-plugin-commonjs');
 
 rollup(
     {
-        entry: "../../build-es/app/main-aot.js",
+        entry: "../../build-aot/app/main-aot.js",
         plugins: [
             nodeResolve({
                 jsnext: true,

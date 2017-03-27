@@ -10,6 +10,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "..")));
 app.use("/scripts", express.static(path.join(__dirname, "..", "..", "node_modules")));
+app.use("/styles", express.static(path.join(__dirname, "..", "..", "docs")));
 
 app.set("port", process.env.PORT || 3000);
 

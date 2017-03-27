@@ -1,7 +1,7 @@
 bin
 aot
 obj
-build-es
+build-aot
 build/app
 build/server
 build/rollup
