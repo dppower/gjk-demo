@@ -23281,10 +23281,8 @@ class CollisionGJK {
     ;
     static isCollision(a, b) {
         let dir = new Vec2(Vec2.UP);
-        console.log(dir);
         let simplex_vertex = this.getSupportPoint(a, b, dir);
         let simplex = [simplex_vertex];
-        console.log(`dir: ${Vec2.stringify(dir)}.`);
         Vec2.inverse(simplex_vertex, dir);
         let is_collision = false;
         let iter = 0;
@@ -24001,7 +23999,6 @@ let ActiveState = class ActiveState {
     next() {
         if (this.current_index === 0) {
             this.collision_state = [...CollisionGJK.getCollisionResults(this.active, this.inactive)];
-            console.log(this.collision_state);
         }
         this.current_index++;
         if (this.current_index > this.collision_state.length) {

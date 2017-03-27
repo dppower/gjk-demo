@@ -39,7 +39,6 @@ export class ActiveState {
         if (this.current_index === 0) {
             // begin simulation
             this.collision_state = [...CollisionGJK.getCollisionResults(this.active, this.inactive)];
-            console.log(this.collision_state);
         }
         this.current_index++;
         if (this.current_index > this.collision_state.length) {
