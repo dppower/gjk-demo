@@ -24209,7 +24209,12 @@ let CanvasController = class CanvasController {
     }
     ;
     setKeyUp(event) {
-        this.input_manager_.setKeyUp(event.code);
+        if (event.code) {
+            this.input_manager_.setKeyUp(event.code);
+        }
+        else if (event.keyCode) {
+            this.input_manager_.setKeyUp(this.keycodes[event.keyCode]);
+        }
         return false;
     }
     ;
