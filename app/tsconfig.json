@@ -11,5 +11,14 @@
         "noImplicitAny": true,
         "suppressImplicitAnyIndexErrors": true,
         "outDir": "../build/app"
-    }
+    },
+
+    "files": [
+        "main.ts",
+        "path-2d.d.ts"
+    ],
+    
+    "exclude": [
+        "main-aot.ts"
+    ]
 }

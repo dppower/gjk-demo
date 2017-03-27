@@ -18,6 +18,10 @@
       "./app/path-2d.d.ts"
   ],
 
+  "exclude": [
+      "./app/main.ts"
+  ],
+
   "angularCompilerOptions": {
    "genDir": "aot",
    "skipMetadataEmit": true
