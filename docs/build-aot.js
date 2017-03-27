@@ -8912,7 +8912,12 @@ var _platform;
  * \@stable
  * @return {?}
  */
-
+function enableProdMode() {
+    if (_runModeLocked) {
+        throw new Error('Cannot enable prod mode after platform setup.');
+    }
+    _devMode = false;
+}
 /**
  * Returns whether Angular is in development mode. After called once,
  * the value is locked and won't change any more.
@@ -25894,6 +25899,7 @@ class AppModuleInjector extends NgModuleInjector {
 }
 const AppModuleNgFactory = new NgModuleFactory(AppModuleInjector, AppModule);
 
+enableProdMode();
 platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
 }());
