@@ -40,7 +40,7 @@ export class Vec2 {
         });
     };
 
-    static length(a: Vec2_T) {
+    static magnitude(a: Vec2_T) {
         return Math.sqrt(a.x ** 2 + a.y ** 2);
     };
 
@@ -58,7 +58,7 @@ export class Vec2 {
     };
 
     static normalise(a: Vec2_T, out?: Vec2): Vec2_T {
-        let length = Vec2.length(a);
+        let length = Vec2.magnitude(a);
         if (length > 0) {
             let factor = 1.0 / length;
             return Vec2.scale(a, factor, out);

@@ -32,7 +32,7 @@ export class Demo implements AfterViewInit, OnDestroy {
     
     @ViewChildren(Canvas2D) canvas_list: QueryList<Canvas2D>;
 
-    constructor(private render_loop: RenderLoop, private active_state: ActiveState) { };
+    constructor(private render_loop: RenderLoop, public active_state: ActiveState) { };
 
     ngAfterViewInit() {
         let initPromises = this.canvas_list.map(canvas => {

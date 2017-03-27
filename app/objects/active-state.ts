@@ -174,21 +174,18 @@ export class ActiveState {
                 let arrow = new Arrow2d();
                 let end = Vec2.scale(Vec2.normalise(direction), 0.5);
                 let arrow_path = Shape2d.drawPolygon([Vec2.ZERO, end], width, height, false);
-                let arrow_head = arrow.getArrowhead(Vec2.ZERO, end, width, height, true);
+                let arrow_head = arrow.getArrowhead(Vec2.ZERO, end, width, height);
                 context.strokeStyle = "rgb(18, 84, 150)";
                 context.stroke(arrow_path);
-                context.fillStyle = "rgb(18, 84, 150)";
-                context.fill(arrow_head);
+                context.stroke(arrow_head);
             }
             else if (status === "Displacement!") {
                 let arrow = new Arrow2d();
-                //let end = Vec2.scale(Vec2.normalise(direction), 0.5);
                 let arrow_path = Shape2d.drawPolygon([Vec2.ZERO, direction], width, height, false);
-                let arrow_head = arrow.getArrowhead(Vec2.ZERO, direction, width, height, true);
-                context.strokeStyle = "rgb(0, 210, 229)";
+                let arrow_head = arrow.getArrowhead(Vec2.ZERO, direction, width, height);
+                context.strokeStyle = this.active.color.rgba;
                 context.stroke(arrow_path);
-                context.fillStyle = "rgb(0, 210, 229)";
-                context.fill(arrow_head);
+                context.stroke(arrow_head);
             }
         }
 

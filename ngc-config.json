@@ -5,14 +5,17 @@
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "outDir": "./build-es"
   },
 
   "files": [
-      "../app/app.module.ts"
+      "./app/main-aot.ts",
+      "./app/path-2d.d.ts"
   ],
 
   "angularCompilerOptions": {

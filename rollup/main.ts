@@ -4,7 +4,7 @@ import commonjs = require( 'rollup-plugin-commonjs');
 
 rollup(
     {
-        entry: "../app/main.js",
+        entry: "../../build-es/app/main-aot.js",
         plugins: [
             nodeResolve({
                 jsnext: true,
@@ -24,7 +24,7 @@ rollup(
     bundle.write(
         {
             format: "iife",
-            dest: "../../docs/build.js",
+            dest: "../../docs/build-aot.js",
             sourceMap: false
         }
     ).catch(err => console.log(err.stack));

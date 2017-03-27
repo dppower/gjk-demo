@@ -51,7 +51,7 @@ export class Rectangle extends Polygon {
         ];
 
         this.updateWorldVertices();
-        this.collision_sphere = Vec2.length(this.local_vertices[0]) + 0.1;
+        this.collision_sphere = Vec2.magnitude(this.local_vertices[0]) + 0.1;
     };
 
     updatePolygon(dt: number, inputs: InputManager, handle_collisions = true) {

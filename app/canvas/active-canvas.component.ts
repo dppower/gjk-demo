@@ -14,7 +14,7 @@ import { CanvasController } from "./canvas-controller.component";
         [client-height]="canvas.offsetHeight"
         [client-top]="canvas.offsetTop" 
         [client-left]="canvas.offsetLeft"
-        [style.z-index]="zIndex"
+        [style.z-index]="z_index"
         [back-buffer]="buffer"
         (selectstart)="false"          
     ></canvas>

@@ -10,7 +10,7 @@ import { Canvas2D } from "./canvas-2d";
         [client-height]="canvas.offsetHeight"
         [client-top]="canvas.offsetTop" 
         [client-left]="canvas.offsetLeft"
-        [style.z-index]="zIndex"
+        [style.z-index]="z_index"
         [back-buffer]="buffer"    
     ></canvas>
     `,

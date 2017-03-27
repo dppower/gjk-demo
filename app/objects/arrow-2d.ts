@@ -23,7 +23,7 @@ export class Arrow2d {
 
     getArrowhead(A: Vec2_T, B: Vec2_T, width: number, height: number, closed = false) {
         let U = Vec2.subtract(B, A);
-        let u_length = Vec2.length(U);
+        let u_length = Vec2.magnitude(U);
         let V = Vec2.perLeft(U);
 
         let h = Vec2.scale(U, this.arrow_length / u_length);
