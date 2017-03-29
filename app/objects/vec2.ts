@@ -29,8 +29,12 @@ export class Vec2 {
     set x(value: number) { this.vector_[0] = value; };
     set y(value: number) { this.vector_[1] = value; };
 
-    constructor(vec: Vec2_T = Vec2.ZERO) {
-        this.vector_ = new Float32Array([vec.x, vec.y]);
+    constructor(vec?: Vec2_T) {
+        if (vec) {
+            this.vector_ = new Float32Array([vec.x, vec.y]);
+        } else {
+            this.vector_ = new Float32Array([0, 0]);
+        }
     };
 
     static fromArray(array: number[]) {

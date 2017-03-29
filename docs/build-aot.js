@@ -22659,8 +22659,13 @@ GridCanvas = GridCanvas_1 = __decorate$4([
 var GridCanvas_1;
 
 class Vec2 {
-    constructor(vec = Vec2.ZERO) {
-        this.vector_ = new Float32Array([vec.x, vec.y]);
+    constructor(vec) {
+        if (vec) {
+            this.vector_ = new Float32Array([vec.x, vec.y]);
+        }
+        else {
+            this.vector_ = new Float32Array([0, 0]);
+        }
     }
     get x() { return this.vector_[0]; }
     ;
@@ -24567,6 +24572,13 @@ Demo = __decorate$15([
         <button id="previous-btn" class="sim-btn" (click)="active_state.previous()" [disabled]="active_state.current_index === 0"><arrow-icon></arrow-icon>
         </button><button id="next-btn" class="sim-btn" (click)="active_state.next()">{{ active_state.current_index === 0 ? "Start" : "Next" }}
         </button><button id="exit-btn" class="sim-btn" (click)="active_state.exit()" [disabled]="active_state.current_index === 0">&#x2716;</button>
+        <div id="instructions">
+            <p>Use left-click to select polygon.</p>
+            <p>Use W, A, S, D to move.</p>
+            <p>Use Q and E to rotate.</p>
+            <p>Collisions can be toggled on and off to overlap polygons.</p>
+            <p>Begin stepping through the algorithm by pressing start.</p>
+        </div>
     </div>
     <grid-canvas [z-index]="0"></grid-canvas>
     <active-canvas [z-index]="1" canvas-controller></active-canvas>
@@ -25307,13 +25319,13 @@ var renderType_Demo = createRenderComponentType('', 0, ViewEncapsulation.Emulate
 class View_Demo0 extends AppView {
     constructor(viewUtils, parentView, parentIndex, parentElement) {
         super(View_Demo0, renderType_Demo, ViewType.COMPONENT, viewUtils, parentView, parentIndex, parentElement, ChangeDetectorStatus.CheckAlways);
-        this._expr_48 = UNINITIALIZED;
-        this._expr_49 = UNINITIALIZED;
-        this._expr_50 = UNINITIALIZED;
-        this._expr_51 = UNINITIALIZED;
-        this._expr_52 = UNINITIALIZED;
-        this._expr_53 = UNINITIALIZED;
-        this._expr_54 = UNINITIALIZED;
+        this._expr_66 = UNINITIALIZED;
+        this._expr_67 = UNINITIALIZED;
+        this._expr_68 = UNINITIALIZED;
+        this._expr_69 = UNINITIALIZED;
+        this._expr_70 = UNINITIALIZED;
+        this._expr_71 = UNINITIALIZED;
+        this._expr_72 = UNINITIALIZED;
     }
     createInternal(rootSelector) {
         const parentRenderNode = this.renderer.createViewRoot(this.parentElement);
@@ -25348,31 +25360,49 @@ class View_Demo0 extends AppView {
         this._text_24 = this.renderer.createText(this._el_23, '', null);
         this._el_25 = createRenderElement(this.renderer, this._el_5, 'button', new InlineArray4(4, 'class', 'sim-btn', 'id', 'exit-btn'), null);
         this._text_26 = this.renderer.createText(this._el_25, '✖', null);
-        this._text_27 = this.renderer.createText(this._el_5, '\n    ', null);
-        this._text_28 = this.renderer.createText(parentRenderNode, '\n    ', null);
-        this._el_29 = createRenderElement(this.renderer, parentRenderNode, 'grid-canvas', EMPTY_INLINE_ARRAY, null);
-        this.compView_29 = new View_GridCanvas0(this.viewUtils, this, 29, this._el_29);
-        this._GridCanvas_29_3 = new Wrapper_GridCanvas();
-        this._Canvas2D_29_4 = this._GridCanvas_29_3.context;
-        this.compView_29.create(this._GridCanvas_29_3.context);
-        this._text_30 = this.renderer.createText(parentRenderNode, '\n    ', null);
-        this._el_31 = createRenderElement(this.renderer, parentRenderNode, 'active-canvas', new InlineArray2(2, 'canvas-controller', ''), null);
-        this.compView_31 = new View_ActiveCanvas0(this.viewUtils, this, 31, this._el_31);
-        this._CanvasController_31_3 = new Wrapper_CanvasController(this.parentView.injectorGet(InputManager, this.parentIndex));
-        this._ActiveCanvas_31_4 = new Wrapper_ActiveCanvas(this._CanvasController_31_3.context, this.parentView.injectorGet(RenderLoop, this.parentIndex), this.parentView.injectorGet(InputManager, this.parentIndex), this.parentView.injectorGet(ActiveState, this.parentIndex));
-        this._Canvas2D_31_5 = this._ActiveCanvas_31_4.context;
-        this.compView_31.create(this._ActiveCanvas_31_4.context);
-        this._text_32 = this.renderer.createText(parentRenderNode, '\n    ', null);
-        this._el_33 = createRenderElement(this.renderer, parentRenderNode, 'footer', EMPTY_INLINE_ARRAY, null);
-        this._text_34 = this.renderer.createText(this._el_33, 'Source Code: ', null);
-        this._el_35 = createRenderElement(this.renderer, this._el_33, 'a', new InlineArray2(2, 'href', 'https://github.com/dppower/gjk-demo'), null);
-        this._text_36 = this.renderer.createText(this._el_35, 'dppower/gjk-demo', null);
-        this._text_37 = this.renderer.createText(parentRenderNode, '\n    ', null);
+        this._text_27 = this.renderer.createText(this._el_5, '\n        ', null);
+        this._el_28 = createRenderElement(this.renderer, this._el_5, 'div', new InlineArray2(2, 'id', 'instructions'), null);
+        this._text_29 = this.renderer.createText(this._el_28, '\n            ', null);
+        this._el_30 = createRenderElement(this.renderer, this._el_28, 'p', EMPTY_INLINE_ARRAY, null);
+        this._text_31 = this.renderer.createText(this._el_30, 'Use left-click to select polygon.', null);
+        this._text_32 = this.renderer.createText(this._el_28, '\n            ', null);
+        this._el_33 = createRenderElement(this.renderer, this._el_28, 'p', EMPTY_INLINE_ARRAY, null);
+        this._text_34 = this.renderer.createText(this._el_33, 'Use W, A, S, D to move.', null);
+        this._text_35 = this.renderer.createText(this._el_28, '\n            ', null);
+        this._el_36 = createRenderElement(this.renderer, this._el_28, 'p', EMPTY_INLINE_ARRAY, null);
+        this._text_37 = this.renderer.createText(this._el_36, 'Use Q and E to rotate.', null);
+        this._text_38 = this.renderer.createText(this._el_28, '\n            ', null);
+        this._el_39 = createRenderElement(this.renderer, this._el_28, 'p', EMPTY_INLINE_ARRAY, null);
+        this._text_40 = this.renderer.createText(this._el_39, 'Collisions can be toggled on and off to overlap polygons.', null);
+        this._text_41 = this.renderer.createText(this._el_28, '\n            ', null);
+        this._el_42 = createRenderElement(this.renderer, this._el_28, 'p', EMPTY_INLINE_ARRAY, null);
+        this._text_43 = this.renderer.createText(this._el_42, 'Begin stepping through the algorithm by pressing start.', null);
+        this._text_44 = this.renderer.createText(this._el_28, '\n        ', null);
+        this._text_45 = this.renderer.createText(this._el_5, '\n    ', null);
+        this._text_46 = this.renderer.createText(parentRenderNode, '\n    ', null);
+        this._el_47 = createRenderElement(this.renderer, parentRenderNode, 'grid-canvas', EMPTY_INLINE_ARRAY, null);
+        this.compView_47 = new View_GridCanvas0(this.viewUtils, this, 47, this._el_47);
+        this._GridCanvas_47_3 = new Wrapper_GridCanvas();
+        this._Canvas2D_47_4 = this._GridCanvas_47_3.context;
+        this.compView_47.create(this._GridCanvas_47_3.context);
+        this._text_48 = this.renderer.createText(parentRenderNode, '\n    ', null);
+        this._el_49 = createRenderElement(this.renderer, parentRenderNode, 'active-canvas', new InlineArray2(2, 'canvas-controller', ''), null);
+        this.compView_49 = new View_ActiveCanvas0(this.viewUtils, this, 49, this._el_49);
+        this._CanvasController_49_3 = new Wrapper_CanvasController(this.parentView.injectorGet(InputManager, this.parentIndex));
+        this._ActiveCanvas_49_4 = new Wrapper_ActiveCanvas(this._CanvasController_49_3.context, this.parentView.injectorGet(RenderLoop, this.parentIndex), this.parentView.injectorGet(InputManager, this.parentIndex), this.parentView.injectorGet(ActiveState, this.parentIndex));
+        this._Canvas2D_49_5 = this._ActiveCanvas_49_4.context;
+        this.compView_49.create(this._ActiveCanvas_49_4.context);
+        this._text_50 = this.renderer.createText(parentRenderNode, '\n    ', null);
+        this._el_51 = createRenderElement(this.renderer, parentRenderNode, 'footer', EMPTY_INLINE_ARRAY, null);
+        this._text_52 = this.renderer.createText(this._el_51, 'Source Code: ', null);
+        this._el_53 = createRenderElement(this.renderer, this._el_51, 'a', new InlineArray2(2, 'href', 'https://github.com/dppower/gjk-demo'), null);
+        this._text_54 = this.renderer.createText(this._el_53, 'dppower/gjk-demo', null);
+        this._text_55 = this.renderer.createText(parentRenderNode, '\n    ', null);
         var disposable_0 = subscribeToRenderElement(this, this._el_7, new InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_7));
         var disposable_1 = subscribeToRenderElement(this, this._el_20, new InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_20));
         var disposable_2 = subscribeToRenderElement(this, this._el_23, new InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_23));
         var disposable_3 = subscribeToRenderElement(this, this._el_25, new InlineArray2(2, 'click', null), this.eventHandler(this.handleEvent_25));
-        var disposable_4 = subscribeToRenderElement(this, this._el_31, new InlineArray16(16, 'contextmenu', null, 'mousemove', null, 'wheel', null, 'mouseup', null, 'mousedown', null, 'keydown', 'document', 'keyup', 'document', 'selectionchange', 'document'), this.eventHandler(this.handleEvent_31));
+        var disposable_4 = subscribeToRenderElement(this, this._el_49, new InlineArray16(16, 'contextmenu', null, 'mousemove', null, 'wheel', null, 'mouseup', null, 'mousedown', null, 'keydown', 'document', 'keyup', 'document', 'selectionchange', 'document'), this.eventHandler(this.handleEvent_49));
         this.init(null, (this.renderer.directRenderer ? null : [
             this._text_0,
             this._el_1,
@@ -25402,16 +25432,34 @@ class View_Demo0 extends AppView {
             this._el_25,
             this._text_26,
             this._text_27,
-            this._text_28,
-            this._el_29,
-            this._text_30,
-            this._el_31,
+            this._el_28,
+            this._text_29,
+            this._el_30,
+            this._text_31,
             this._text_32,
             this._el_33,
             this._text_34,
-            this._el_35,
-            this._text_36,
-            this._text_37
+            this._text_35,
+            this._el_36,
+            this._text_37,
+            this._text_38,
+            this._el_39,
+            this._text_40,
+            this._text_41,
+            this._el_42,
+            this._text_43,
+            this._text_44,
+            this._text_45,
+            this._text_46,
+            this._el_47,
+            this._text_48,
+            this._el_49,
+            this._text_50,
+            this._el_51,
+            this._text_52,
+            this._el_53,
+            this._text_54,
+            this._text_55
         ]), [
             disposable_0,
             disposable_1,
@@ -25425,76 +25473,76 @@ class View_Demo0 extends AppView {
         if (((token === ArrowIcon) && (21 === requestNodeIndex))) {
             return this._ArrowIcon_21_3.context;
         }
-        if (((token === GridCanvas) && (29 === requestNodeIndex))) {
-            return this._GridCanvas_29_3.context;
+        if (((token === GridCanvas) && (47 === requestNodeIndex))) {
+            return this._GridCanvas_47_3.context;
         }
-        if (((token === Canvas2D) && (29 === requestNodeIndex))) {
-            return this._Canvas2D_29_4;
+        if (((token === Canvas2D) && (47 === requestNodeIndex))) {
+            return this._Canvas2D_47_4;
         }
-        if (((token === CanvasController) && (31 === requestNodeIndex))) {
-            return this._CanvasController_31_3.context;
+        if (((token === CanvasController) && (49 === requestNodeIndex))) {
+            return this._CanvasController_49_3.context;
         }
-        if (((token === ActiveCanvas) && (31 === requestNodeIndex))) {
-            return this._ActiveCanvas_31_4.context;
+        if (((token === ActiveCanvas) && (49 === requestNodeIndex))) {
+            return this._ActiveCanvas_49_4.context;
         }
-        if (((token === Canvas2D) && (31 === requestNodeIndex))) {
-            return this._Canvas2D_31_5;
+        if (((token === Canvas2D) && (49 === requestNodeIndex))) {
+            return this._Canvas2D_49_5;
         }
         return notFoundResult;
     }
     detectChangesInternal(throwOnChange) {
         this._ArrowIcon_21_3.ngDoCheck(this, this._el_21, throwOnChange);
-        const currVal_29_0_0 = 0;
-        this._GridCanvas_29_3.check_z_index(currVal_29_0_0, throwOnChange, false);
-        this._GridCanvas_29_3.ngDoCheck(this, this._el_29, throwOnChange);
-        this._CanvasController_31_3.ngDoCheck(this, this._el_31, throwOnChange);
-        const currVal_31_1_0 = 1;
-        this._ActiveCanvas_31_4.check_z_index(currVal_31_1_0, throwOnChange, false);
-        this._ActiveCanvas_31_4.ngDoCheck(this, this._el_31, throwOnChange);
-        const currVal_48 = this.context.active_state.is_collisions;
-        if (checkBinding(throwOnChange, this._expr_48, currVal_48)) {
-            this.renderer.setElementClass(this._el_9, 'is-collision', currVal_48);
-            this._expr_48 = currVal_48;
+        const currVal_47_0_0 = 0;
+        this._GridCanvas_47_3.check_z_index(currVal_47_0_0, throwOnChange, false);
+        this._GridCanvas_47_3.ngDoCheck(this, this._el_47, throwOnChange);
+        this._CanvasController_49_3.ngDoCheck(this, this._el_49, throwOnChange);
+        const currVal_49_1_0 = 1;
+        this._ActiveCanvas_49_4.check_z_index(currVal_49_1_0, throwOnChange, false);
+        this._ActiveCanvas_49_4.ngDoCheck(this, this._el_49, throwOnChange);
+        const currVal_66 = this.context.active_state.is_collisions;
+        if (checkBinding(throwOnChange, this._expr_66, currVal_66)) {
+            this.renderer.setElementClass(this._el_9, 'is-collision', currVal_66);
+            this._expr_66 = currVal_66;
         }
-        const currVal_49 = !this.context.active_state.is_collisions;
-        if (checkBinding(throwOnChange, this._expr_49, currVal_49)) {
-            this.renderer.setElementClass(this._el_12, 'is-collision', currVal_49);
-            this._expr_49 = currVal_49;
+        const currVal_67 = !this.context.active_state.is_collisions;
+        if (checkBinding(throwOnChange, this._expr_67, currVal_67)) {
+            this.renderer.setElementClass(this._el_12, 'is-collision', currVal_67);
+            this._expr_67 = currVal_67;
         }
-        const currVal_50 = inlineInterpolate(1, 'Step: ', this.context.active_state.current_index, '');
-        if (checkBinding(throwOnChange, this._expr_50, currVal_50)) {
-            this.renderer.setText(this._text_16, currVal_50);
-            this._expr_50 = currVal_50;
+        const currVal_68 = inlineInterpolate(1, 'Step: ', this.context.active_state.current_index, '');
+        if (checkBinding(throwOnChange, this._expr_68, currVal_68)) {
+            this.renderer.setText(this._text_16, currVal_68);
+            this._expr_68 = currVal_68;
         }
-        const currVal_51 = inlineInterpolate(1, 'Status: ', this.context.active_state.getStatus(), '');
-        if (checkBinding(throwOnChange, this._expr_51, currVal_51)) {
-            this.renderer.setText(this._text_18, currVal_51);
-            this._expr_51 = currVal_51;
+        const currVal_69 = inlineInterpolate(1, 'Status: ', this.context.active_state.getStatus(), '');
+        if (checkBinding(throwOnChange, this._expr_69, currVal_69)) {
+            this.renderer.setText(this._text_18, currVal_69);
+            this._expr_69 = currVal_69;
         }
-        const currVal_52 = (this.context.active_state.current_index === 0);
-        if (checkBinding(throwOnChange, this._expr_52, currVal_52)) {
-            this.renderer.setElementProperty(this._el_20, 'disabled', currVal_52);
-            this._expr_52 = currVal_52;
+        const currVal_70 = (this.context.active_state.current_index === 0);
+        if (checkBinding(throwOnChange, this._expr_70, currVal_70)) {
+            this.renderer.setElementProperty(this._el_20, 'disabled', currVal_70);
+            this._expr_70 = currVal_70;
         }
         this._ArrowIcon_21_3.checkHost(this, this.compView_21, this._el_21, throwOnChange);
-        const currVal_53 = inlineInterpolate(1, '', ((this.context.active_state.current_index === 0) ? 'Start' : 'Next'), '\n        ');
-        if (checkBinding(throwOnChange, this._expr_53, currVal_53)) {
-            this.renderer.setText(this._text_24, currVal_53);
-            this._expr_53 = currVal_53;
+        const currVal_71 = inlineInterpolate(1, '', ((this.context.active_state.current_index === 0) ? 'Start' : 'Next'), '\n        ');
+        if (checkBinding(throwOnChange, this._expr_71, currVal_71)) {
+            this.renderer.setText(this._text_24, currVal_71);
+            this._expr_71 = currVal_71;
         }
-        const currVal_54 = (this.context.active_state.current_index === 0);
-        if (checkBinding(throwOnChange, this._expr_54, currVal_54)) {
-            this.renderer.setElementProperty(this._el_25, 'disabled', currVal_54);
-            this._expr_54 = currVal_54;
+        const currVal_72 = (this.context.active_state.current_index === 0);
+        if (checkBinding(throwOnChange, this._expr_72, currVal_72)) {
+            this.renderer.setElementProperty(this._el_25, 'disabled', currVal_72);
+            this._expr_72 = currVal_72;
         }
         this.compView_21.internalDetectChanges(throwOnChange);
-        this.compView_29.internalDetectChanges(throwOnChange);
-        this.compView_31.internalDetectChanges(throwOnChange);
+        this.compView_47.internalDetectChanges(throwOnChange);
+        this.compView_49.internalDetectChanges(throwOnChange);
         if (!throwOnChange) {
             if (this._viewQuery_Canvas2D_0.dirty) {
                 this._viewQuery_Canvas2D_0.reset([
-                    this._Canvas2D_29_4,
-                    this._Canvas2D_31_5
+                    this._Canvas2D_47_4,
+                    this._Canvas2D_49_5
                 ]);
                 this.context.canvas_list = this._viewQuery_Canvas2D_0;
                 this._viewQuery_Canvas2D_0.notifyOnChanges();
@@ -25503,8 +25551,8 @@ class View_Demo0 extends AppView {
     }
     destroyInternal() {
         this.compView_21.destroy();
-        this.compView_29.destroy();
-        this.compView_31.destroy();
+        this.compView_47.destroy();
+        this.compView_49.destroy();
     }
     handleEvent_7(eventName, $event) {
         this.markPathToRootAsCheckOnce();
@@ -25542,10 +25590,10 @@ class View_Demo0 extends AppView {
         }
         return result;
     }
-    handleEvent_31(eventName, $event) {
+    handleEvent_49(eventName, $event) {
         this.markPathToRootAsCheckOnce();
         var result = true;
-        result = (this._CanvasController_31_3.handleEvent(eventName, $event) && result);
+        result = (this._CanvasController_49_3.handleEvent(eventName, $event) && result);
         return result;
     }
 }
@@ -25923,3 +25971,4 @@ enableProdMode();
 platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
 }());
+//# sourceMappingURL=build-aot.js.map

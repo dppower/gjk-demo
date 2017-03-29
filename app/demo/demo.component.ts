@@ -14,6 +14,13 @@ import { ActiveState } from "../objects/active-state";
         <button id="previous-btn" class="sim-btn" (click)="active_state.previous()" [disabled]="active_state.current_index === 0"><arrow-icon></arrow-icon>
         </button><button id="next-btn" class="sim-btn" (click)="active_state.next()">{{ active_state.current_index === 0 ? "Start" : "Next" }}
         </button><button id="exit-btn" class="sim-btn" (click)="active_state.exit()" [disabled]="active_state.current_index === 0">&#x2716;</button>
+        <div id="instructions">
+            <p>Use left-click to select polygon.</p>
+            <p>Use W, A, S, D to move.</p>
+            <p>Use Q and E to rotate.</p>
+            <p>Collisions can be toggled on and off to overlap polygons.</p>
+            <p>Begin stepping through the algorithm by pressing start.</p>
+        </div>
     </div>
     <grid-canvas [z-index]="0"></grid-canvas>
     <active-canvas [z-index]="1" canvas-controller></active-canvas>

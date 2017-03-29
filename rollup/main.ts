@@ -4,14 +4,14 @@ import commonjs = require( 'rollup-plugin-commonjs');
 
 rollup(
     {
-        entry: "../../build-aot/app/main-aot.js",
+        entry: "./build-aot/app/main-aot.js",
         plugins: [
             nodeResolve({
                 jsnext: true,
                 module: true
             }),
             commonjs({
-                include: "../../node_modules/rxjs/**"
+                include: "./node_modules/rxjs/**"
             })
         ],
         onwarn(warning) {
@@ -24,8 +24,8 @@ rollup(
     bundle.write(
         {
             format: "iife",
-            dest: "../../docs/build-aot.js",
-            sourceMap: false
+            dest: "./docs/build-aot.js",
+            sourceMap: true
         }
     ).catch(err => console.log(err.stack));
 });

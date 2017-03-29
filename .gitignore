@@ -10,6 +10,7 @@ node_modules
 npm-debug.*
 normalize.css
 test-styles.css
-.vs
-.db
-.opendb
+*.vs
+*.db
+*.opendb
+*.js.map
