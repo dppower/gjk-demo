@@ -14,3 +14,4 @@ test-styles.css
 *.db
 *.opendb
 *.js.map
+*.ps1

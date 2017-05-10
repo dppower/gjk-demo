@@ -21,7 +21,7 @@ export class Arrow2d {
         this.arrow_half_width = length * Math.tan(half_angle);
     };
 
-    getArrowhead(A: Vec2_T, B: Vec2_T, width: number, height: number, closed = false) {
+    getArrowhead(A: Vec2_T, B: Vec2_T, width: number, height: number, closed?: boolean) {
         let U = Vec2.subtract(B, A);
         let u_length = Vec2.magnitude(U);
         let V = Vec2.perLeft(U);
